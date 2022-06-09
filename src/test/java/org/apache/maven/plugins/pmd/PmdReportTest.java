@@ -532,7 +532,7 @@ public class PmdReportTest
         // check that there is no violation reported for "unusedVar2" - as it is suppressed
         assertFalse( str.contains( "Avoid unused private fields such as 'unusedVar2'.\n </violation>" ) );
         // but it appears as suppressed
-        assertTrue( str.contains( "suppressiontype=\"nopmd\" msg=\"Avoid unused private fields such as 'unusedVar2'.\"" ));
+        assertTrue( str.contains( "suppressiontype=\"//nopmd\" msg=\"Avoid unused private fields such as 'unusedVar2'.\"" ));
 
         generatedFile = new File( getBasedir(), "target/test/unit/default-configuration/target/site/pmd.html" );
         renderer( mojo, generatedFile );
@@ -564,7 +564,7 @@ public class PmdReportTest
         // check that there is no violation reported for "unusedVar2" - as it is suppressed
         assertFalse( str.contains( "Avoid unused private fields such as 'unusedVar2'.\n </violation>" ) );
         // but it appears as suppressed
-        assertTrue( str.contains( "suppressiontype=\"nopmd\" msg=\"Avoid unused private fields such as 'unusedVar2'.\"" ));
+        assertTrue( str.contains( "suppressiontype=\"//nopmd\" msg=\"Avoid unused private fields such as 'unusedVar2'.\"" ));
 
         generatedFile = new File( getBasedir(), "target/test/unit/default-configuration/target/site/pmd.html" );
         renderer( mojo, generatedFile );
@@ -644,16 +644,15 @@ public class PmdReportTest
         File generatedFile = new File( getBasedir(), "target/test/unit/parse-error/target/pmd.xml" );
         assertTrue( FileUtils.fileExists( generatedFile.getAbsolutePath() ) );
         String str = readFile( generatedFile );
-        assertTrue( str.contains( "Error while parsing" ) );
         // The parse exception must be in the XML report
-        assertTrue( str.contains( "ParseException: Encountered \"\" at line 23, column 5." ) );
+        assertTrue( str.contains( "ParseException: Encountered  at line 23, column 5." ) );
 
         generatedFile = new File( getBasedir(), "target/test/unit/default-configuration/target/site/pmd.html" );
         renderer( mojo, generatedFile );
         assertTrue( FileUtils.fileExists( generatedFile.getAbsolutePath() ) );
         str = readFile( generatedFile );
         // The parse exception must also be in the HTML report
-        assertTrue( str.contains( "ParseException: Encountered \"\" at line 23, column 5." ) );
+        assertTrue( str.contains( "ParseException: Encountered  at line 23, column 5." ) );
     }
 
     public void testPMDProcessingErrorWithDetailsNoReport()
@@ -670,9 +669,8 @@ public class PmdReportTest
         File generatedFile = new File( getBasedir(), "target/test/unit/parse-error/target/pmd.xml" );
         assertTrue( FileUtils.fileExists( generatedFile.getAbsolutePath() ) );
         String str = readFile( generatedFile );
-        assertTrue( str.contains( "Error while parsing" ) );
         // The parse exception must be in the XML report
-        assertTrue( str.contains( "ParseException: Encountered \"\" at line 23, column 5." ) );
+        assertTrue( str.contains( "ParseException: Encountered  at line 23, column 5." ) );
 
         generatedFile = new File( getBasedir(), "target/test/unit/default-configuration/target/site/pmd.html" );
         renderer( mojo, generatedFile );
